@@ -8,11 +8,10 @@ public class Member {
     private String profile;
     private String createTime;
 
-    public Member(Long id, String name, String profile) {
-        this.id = id;
+    public Member(String name, String profile) {
         this.name = name;
         this.profile = profile;
-        createTime = LocalDateTime.now().toString();
+        createTime = LocalDateTime.now().toString().split("\\.")[0];
     }
 
     public Long getId() {
