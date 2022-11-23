@@ -1,14 +1,18 @@
 package domain;
 
+import java.time.LocalDateTime;
+
 public class Member {
     private Long id;
     private String name;
     private String profile;
+    private String createTime;
 
     public Member(Long id, String name, String profile) {
         this.id = id;
         this.name = name;
         this.profile = profile;
+        createTime = LocalDateTime.now().toString();
     }
 
     public Long getId() {
@@ -34,4 +38,9 @@ public class Member {
     public void setProfile(String profile) {
         this.profile = profile;
     }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
 }
