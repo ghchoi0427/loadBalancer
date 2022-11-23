@@ -2,6 +2,8 @@ package repository;
 
 import domain.Member;
 
+import java.util.List;
+
 public interface MemberRepository {
 
     Long save(Member member);
@@ -11,4 +13,6 @@ public interface MemberRepository {
     Member updateMember(Member member);
 
     void deleteMember(Long id);
+
+    List<Member> findAll();
 }

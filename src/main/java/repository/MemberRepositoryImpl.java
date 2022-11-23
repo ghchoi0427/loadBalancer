@@ -2,18 +2,11 @@ package repository;
 
 import domain.Member;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
+import java.util.List;
 
-public class MemberRepositoryImpl implements MemberRepository{
-    private static MemberRepositoryImpl memberRepositoryImpl;
-
-    public static MemberRepositoryImpl getInstance() {
-        return Objects.requireNonNullElseGet(memberRepositoryImpl, MemberRepositoryImpl::new);
-    }
-
-    private MemberRepositoryImpl() {
-    }
+public class MemberRepositoryImpl implements MemberRepository {
 
     private final HashMap<Long, Member> map = new HashMap<>();
     private long increment = 0;
@@ -41,5 +34,10 @@ public class MemberRepositoryImpl implements MemberRepository{
     @Override
     public void deleteMember(Long id) {
         map.remove(id);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return new ArrayList<>(map.values());
     }
 }
