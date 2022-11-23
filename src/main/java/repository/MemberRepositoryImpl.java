@@ -13,7 +13,8 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public Long save(Member member) {
-        map.put(increment++, member);
+        member.setId(increment++);
+        map.put(member.getId(), member);
         return increment;
     }
 
