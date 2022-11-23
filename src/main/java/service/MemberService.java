@@ -13,7 +13,15 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+    public Long saveMember(Member member) {
+        return memberRepository.save(member);
+    }
+
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
+    }
+
+    public Member findMemberById(Long id) {
+        return memberRepository.findMemberById(id);
     }
 }
