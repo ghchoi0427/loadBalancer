@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LoadBalancingPolicy {
 
-    GateWay gateway(List<GateWay> gateWays);
+    GateWay gateway();
 
-    ApiService apiService(List<ApiService> services);
+    ApiService apiService();
 }
