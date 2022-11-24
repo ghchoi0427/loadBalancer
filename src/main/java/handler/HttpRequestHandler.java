@@ -11,6 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequestHandler implements HttpHandler {
+    private int id;
+
+    public HttpRequestHandler(int id) {
+        this.id = id;
+    }
+
     @Override
     public void handle(HttpExchange arg) throws IOException {
         arg.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
@@ -24,7 +30,7 @@ public class HttpRequestHandler implements HttpHandler {
     }
 
     private void handleGetMethod(HttpExchange arg) throws IOException {
-        System.out.println("request method" + arg.getRequestMethod());
+        System.out.println("request method: " + arg.getRequestMethod());
         arg.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         Map<String, Object> parameters = new HashMap<>();
         URI requestedUri = arg.getRequestURI();
@@ -35,7 +41,7 @@ public class HttpRequestHandler implements HttpHandler {
         for (String key : parameters.keySet()) {
             response += key + " = " + parameters.get(key) + "\n";
         }
-        System.out.println("response : " + response);
+        System.out.println("server-" + id + " response : " + response);
         arg.sendResponseHeaders(200, response.length());
         OutputStream os = arg.getResponseBody();
         os.write(response.getBytes());
