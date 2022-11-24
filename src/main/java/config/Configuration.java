@@ -2,6 +2,7 @@ package config;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import container.ApiServiceContainer;
 import container.ServerContainer;
 import handler.HttpRequestHandler;
 import util.ServerUtil;
@@ -25,5 +26,11 @@ public class Configuration {
         ServerContainer.getInstance().addServerInstance(server1);
         ServerContainer.getInstance().addServerInstance(server2);
         ServerContainer.getInstance().addServerInstance(server3);
+    }
+
+    public static void initApiService() {
+        for (int i = 0; i < 30; i++) {
+            ApiServiceContainer.getInstance().addApiService();
+        }
     }
 }
