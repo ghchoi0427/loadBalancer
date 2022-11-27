@@ -1,28 +1,24 @@
 package container;
 
 import api.service.ApiService;
-import repository.MemberRepositoryImpl;
-import service.MemberService;
+import config.Configuration;
 
 import java.util.HashMap;
 
 public class ApiServiceContainer {
     HashMap<Integer, ApiService> container = new HashMap<>();
-    private static ApiServiceContainer apiServiceContainer;
+    private static ApiServiceContainer apiServiceContainer = new ApiServiceContainer();
     private static int sequence = 0;
 
     private ApiServiceContainer() {
     }
 
     public static ApiServiceContainer getInstance() {
-        if (apiServiceContainer == null) {
-            return new ApiServiceContainer();
-        }
         return apiServiceContainer;
     }
 
     public void addApiService() {
-        ApiService apiService = new ApiService(sequence++, new MemberService(new MemberRepositoryImpl()));
+        ApiService apiService = new ApiService(sequence++, Configuration.memberService());
         System.out.println("api service " + apiService.getServiceId() + " created");
         container.put(apiService.getServiceId(), apiService);
     }
