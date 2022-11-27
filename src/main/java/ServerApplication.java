@@ -14,14 +14,15 @@ public class ServerApplication {
         HashMap<Integer, HttpServer> serverMap = ServerContainer.getInstance().getServerInstances();
         for (int i = 0; i < serverMap.size(); i++) {
             serverMap.get(i).start();
-            System.out.println("server " + i + " started");
+            System.out.println("distributed server " + i + " started");
         }
     }
 
     private static void startFrontServer() throws IOException {
-        HttpServer frontServer = HttpServer.create(new InetSocketAddress(8080), 0);
+        HttpServer frontServer = HttpServer.create(new InetSocketAddress(8088), 0);
         ServerUtil.initServer(frontServer, "/", new FrontServerHandler(new RoundRobin()));
         frontServer.start();
+        System.out.println("front server started");
     }
 
 
