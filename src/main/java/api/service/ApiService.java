@@ -1,10 +1,14 @@
 package api.service;
 
+import com.sun.net.httpserver.HttpExchange;
 import domain.Member;
+import domain.MemberDto;
 import service.MemberService;
 import util.JsonParser;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class ApiService {
     private int serviceId;
@@ -18,14 +22,27 @@ public class ApiService {
 
     private final MemberService memberService;
 
-    public void doPost(String memberJson) {
-        Member member = (Member) JsonParser.jsonToObject(memberJson);
-        memberService.saveMember(member);
+    public String queryGet(Map<String, Object> parameter, HttpExchange arg) throws IOException {
+        System.out.println("arg.getRequestMethod() = " + arg.getRequestMethod());
+
+        if (arg.getRequestMethod().equals("GET")) {
+            System.out.println("api-service-"+serviceId+" : GET");
+            return doGet();
+        }
+
+        return null;
+
     }
 
-    public String doGet(Long id) {
-        Member memberById = memberService.findMemberById(id);
-        return JsonParser.objectToJson(memberById);
+    public String queryPost(HttpExchange arg) {
+        return null;
+    }
+
+    public void doPost(String memberJson) {
+        MemberDto member = (MemberDto) JsonParser.jsonToObject(memberJson);
+        System.out.println("member.getName() = " + member.getName());
+        System.out.println("member.getProfile() = " + member.getProfile());
+        memberService.saveMember(member);
     }
 
     public String doGet() {
