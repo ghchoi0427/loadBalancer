@@ -1,19 +1,22 @@
 package service;
 
+import config.Configuration;
 import domain.Member;
-import repository.MemberRepositoryImpl;
+import domain.MemberDto;
+import repository.MemberRepository;
 
 import java.util.List;
 
 public class MemberService {
-    private final MemberRepositoryImpl memberRepository;
+    private final MemberRepository memberRepository;
 
 
-    public MemberService(MemberRepositoryImpl memberRepository) {
-        this.memberRepository = memberRepository;
+    public MemberService() {
+        this.memberRepository = Configuration.memberRepository();
     }
 
-    public Long saveMember(Member member) {
+    public Long saveMember(MemberDto dto) {
+        Member member = new Member(dto.getName(), dto.getProfile());
         return memberRepository.save(member);
     }
 
