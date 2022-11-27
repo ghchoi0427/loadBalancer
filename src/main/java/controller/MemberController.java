@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Member;
+import domain.MemberDto;
 import service.MemberService;
 import util.JsonParser;
 
@@ -14,8 +15,8 @@ public class MemberController implements Controller {
     }
 
     public void doPost(String memberJson) {
-        Member member = (Member) JsonParser.jsonToObject(memberJson);
-        memberService.saveMember(member);
+        MemberDto dto = (MemberDto) JsonParser.jsonToObject(memberJson);
+        memberService.saveMember(dto);
     }
 
     public String doGet(Long id) {
