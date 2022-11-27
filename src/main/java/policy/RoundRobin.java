@@ -3,11 +3,12 @@ package policy;
 import api.gateway.GateWay;
 import api.service.ApiService;
 import com.sun.net.httpserver.HttpServer;
+import container.ApiServiceContainer;
 import container.ServerContainer;
 
 import java.util.HashMap;
 
-public class RoundRobin implements LoadBalancingPolicy{
+public class RoundRobin implements LoadBalancingPolicy {
     int gatewayIdx = 0;
     int serviceIdx = 0;
 
@@ -21,6 +22,7 @@ public class RoundRobin implements LoadBalancingPolicy{
 
     @Override
     public ApiService apiService() {
-        return null;
+        HashMap<Integer, ApiService> serviceContainer = ApiServiceContainer.getInstance().getContainer();
+        return serviceContainer.get(serviceIdx++ % serviceContainer.size());
     }
 }
