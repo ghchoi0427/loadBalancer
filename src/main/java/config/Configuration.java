@@ -6,11 +6,14 @@ import api.MyServer;
 import container.ApiServiceContainer;
 import container.MyServerContainer;
 import policy.RoundRobin;
+import repository.MemberRepository;
+import repository.MemberRepositoryImpl;
 
 public class Configuration {
     private static final MyServerContainer myServerContainer = new MyServerContainer();
     private static final ApiServiceContainer apiServiceContainer = new ApiServiceContainer();
     private static final Gateway gateway = new Gateway(new RoundRobin());
+    private static final MemberRepository memberRepository = new MemberRepositoryImpl();
     private static int serverScale = 3;
     private static int apiServiceScale = 8;
 
@@ -24,7 +27,7 @@ public class Configuration {
 
     public static void fillApiServiceContainer() {
         for (int i = 1; i <= apiServiceScale; i++) {
-            ApiService apiService = new ApiService("" + i + i);
+            ApiService apiService = new ApiService("" + i + i, Configuration.memberRepository());
             apiServiceContainer.addApiService(apiService);
         }
         System.out.println("API Service: [/11] ~ [/" + apiServiceScale + apiServiceScale + "]");
@@ -40,5 +43,9 @@ public class Configuration {
 
     public static Gateway gateway() {
         return gateway;
+    }
+
+    public static MemberRepository memberRepository() {
+        return memberRepository;
     }
 }
