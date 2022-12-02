@@ -7,11 +7,12 @@ import util.UriParser;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyServer {
     private final int port;
-    private List<ServerLog> logs;
+    private List<ServerLog> logs = new ArrayList<>();
 
     public int getPort() {
         return port;
@@ -35,6 +36,7 @@ public class MyServer {
 
     public void handle(HttpExchange arg) throws IOException {
         String[] uri = UriParser.parseURI(arg.getRequestURI().toString());
+        logs.add(new ServerLog("", String.valueOf(port), arg.getRequestMethod() +" : "+ uri[2]));
 
         try {
             String apiUri = uri[1];
