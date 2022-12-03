@@ -1,6 +1,6 @@
 package util;
 
-import log.Logger;
+import logging.Logger;
 
 import java.io.IOException;
 import java.net.Socket;
