@@ -29,7 +29,6 @@ public class ApiService {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("socket connected");
     }
 
     public String getUri() {
