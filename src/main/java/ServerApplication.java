@@ -2,6 +2,7 @@ import api.FrontServer;
 import api.MyServer;
 import config.Configuration;
 import handler.FrontServerHandler;
+import util.SocketServer;
 
 import java.io.IOException;
 
@@ -10,6 +11,7 @@ public class ServerApplication {
     private static final FrontServerHandler frontServerHandler = new FrontServerHandler();
 
     public static void run() throws IOException {
+        SocketServer.start();
         Configuration.fillServerContainer();
         Configuration.fillApiServiceContainer();
         startFrontServer();
