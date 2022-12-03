@@ -2,25 +2,34 @@ package api;
 
 import com.sun.net.httpserver.HttpExchange;
 import domain.Member;
+import domain.SocketConst;
 import repository.MemberRepository;
 import util.JsonParser;
 import util.UriParser;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static util.DateTimeFormat.getFormattedDateTime;
+
 public class ApiService {
     private final String uri;
     private final MemberRepository memberRepository;
+    private Socket socket;
 
-    public ApiService(String uri, MemberRepository memberRepository) {
+    public ApiService(String uri, MemberRepository memberRepository) throws IOException {
         this.uri = uri;
         this.memberRepository = memberRepository;
+        try {
+            socket = new Socket(SocketConst.ADDRESS, SocketConst.PORT);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("socket connected");
     }
 
     public String getUri() {
@@ -28,6 +37,7 @@ public class ApiService {
     }
 
     public void handle(HttpExchange arg) throws IOException {
+        sendLog(arg);
         if (Objects.equals(arg.getRequestMethod(), "GET")) {
             doGet(arg);
         }
@@ -35,6 +45,16 @@ public class ApiService {
         if (Objects.equals(arg.getRequestMethod(), "POST")) {
             doPost(arg);
         }
+    }
+
+    private void sendLog(HttpExchange arg) throws IOException {
+        OutputStream out = socket.getOutputStream();
+        PrintWriter pw = new PrintWriter(out, true);
+        String message = "[" + getFormattedDateTime() + "]"
+                + " API   [" + this.uri + "] : "
+                + arg.getRequestMethod() + " "
+                + UriParser.parseURI(arg.getRequestURI().toString())[2];
+        pw.println(message);
     }
 
     private void doGet(HttpExchange arg) throws IOException {

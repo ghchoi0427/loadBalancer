@@ -9,6 +9,8 @@ import policy.RoundRobin;
 import repository.MemberRepository;
 import repository.MemberRepositoryImpl;
 
+import java.io.IOException;
+
 public class Configuration {
     private static final MyServerContainer myServerContainer = new MyServerContainer();
     private static final ApiServiceContainer apiServiceContainer = new ApiServiceContainer();
@@ -25,7 +27,7 @@ public class Configuration {
         }
     }
 
-    public static void fillApiServiceContainer() {
+    public static void fillApiServiceContainer() throws IOException {
         for (int i = 1; i <= apiServiceScale; i++) {
             ApiService apiService = new ApiService("" + i + i, Configuration.memberRepository());
             apiServiceContainer.addApiService(apiService);
