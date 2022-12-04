@@ -78,7 +78,6 @@ public class ApiService {
 
     private void doPost(HttpExchange arg) throws IOException {
         String message = "API Service [" + uri + "] :Do POST";
-        System.out.println(message);
 
         InputStreamReader isr = new InputStreamReader(arg.getRequestBody());
         BufferedReader br = new BufferedReader(isr);
