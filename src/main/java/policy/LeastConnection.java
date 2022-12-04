@@ -11,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 
 public class LeastConnection implements LoadBalancingPolicy {
     private final MyServerContainer serverContainer = Configuration.myServerContainer();
-    private int range = 10;
+    private int range = 500;
 
     @Override
     public MyServer myServer() {
@@ -35,8 +35,8 @@ public class LeastConnection implements LoadBalancingPolicy {
         LocalDateTime now = LocalDateTime.now();
         for (ServerLog log : server.getLog()) {
             LocalDateTime from = log.getCreatedTime();
-            long seconds = ChronoUnit.SECONDS.between(from, now);
-            if (seconds < range) {
+            long interval = ChronoUnit.MILLIS.between(from, now);
+            if (interval < range) {
                 result++;
             }
         }
