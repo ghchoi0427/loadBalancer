@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,14 +19,19 @@ public class ApacheClient {
     private static String[] profiles = new String[]{"hello", "world", "this", "is", "load", "balancing", "project"};
     private static String[] uris = new String[]{"11", "22", "33", "44", "55", "66", "77", "88"};
 
-    public static void main(String[] args) {
-        repeatPost(1000);
-        repeatGet(1000);
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("input request repetition: ");
+        Scanner sc = new Scanner(System.in);
+        int rep = sc.nextInt();
+        System.out.println("sending "+rep+" POST requests and "+rep+" GET requests...");
+        repeatPost(rep);
+        repeatGet(rep);
     }
 
-    private static void repeatPost(int rep) {
+    private static void repeatPost(int rep) throws InterruptedException {
         ExecutorService service = Executors.newCachedThreadPool();
         for (int i = 0; i < rep; i++) {
+            Thread.sleep(100);
             service.submit(() -> {
                 try {
                     sendPost();
@@ -37,9 +43,10 @@ public class ApacheClient {
         service.shutdown();
     }
 
-    private static void repeatGet(int rep) {
+    private static void repeatGet(int rep) throws InterruptedException {
         ExecutorService service = Executors.newCachedThreadPool();
         for (int i = 0; i < rep; i++) {
+            Thread.sleep(100);
             service.submit(() -> {
                 try {
                     sendGet();
