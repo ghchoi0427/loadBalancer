@@ -5,6 +5,7 @@ import api.Gateway;
 import api.MyServer;
 import container.ApiServiceContainer;
 import container.MyServerContainer;
+import policy.LeastConnection;
 import policy.RoundRobin;
 import repository.MemberRepository;
 import repository.MemberRepositoryImpl;
@@ -14,9 +15,9 @@ import java.io.IOException;
 public class Configuration {
     private static final MyServerContainer myServerContainer = new MyServerContainer();
     private static final ApiServiceContainer apiServiceContainer = new ApiServiceContainer();
-    private static final Gateway gateway = new Gateway(new RoundRobin());
+    private static final Gateway gateway = new Gateway(new LeastConnection());
     private static final MemberRepository memberRepository = new MemberRepositoryImpl();
-    private static int serverScale = 3;
+    private static int serverScale = 4;
     private static int apiServiceScale = 8;
 
     public static void fillServerContainer() {
