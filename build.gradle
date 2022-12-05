@@ -19,3 +19,7 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+bootJar{
+    mainClass = 'src/main/java/Application.java'
+}
