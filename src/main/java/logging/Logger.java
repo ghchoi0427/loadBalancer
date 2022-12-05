@@ -10,7 +10,8 @@ public class Logger {
     public static void checkDirectory() {
         File directory = new File(PATH);
         if (!directory.exists()) {
-            directory.mkdir();
+            boolean mkdir = directory.mkdir();
+            System.out.println("mkdir = " + mkdir);
         }
     }
 
