@@ -15,6 +15,7 @@ public class Logger {
     }
 
     public static void writeFile(String content) throws IOException {
+        System.out.print(content);
         checkDirectory();
         String fileName = PATH + "/log.txt";
         File file = new File(fileName);
